@@ -14,14 +14,13 @@ import random
 import string
 import logging
 import datetime
-
+import html
 
 from bs4 import BeautifulSoup as BeautifulSoup_
 from xml.sax.saxutils import escape, unescape
 
 import six
 from six import iteritems
-from six.moves import html_parser
 from six.moves.urllib.parse import ParseResult
 from six.moves.urllib_parse import unquote_plus
 
@@ -98,8 +97,7 @@ HTML_UNESCAPE_TABLE = dict((v, k) for k, v in HTML_ESCAPE_TABLE.items())
 
 
 def unescape_html(s):
-    h = html_parser.HTMLParser()
-    s = h.unescape(s)
+    s = html.unescape(s)
     s = unquote_plus(s)
     return unescape(s, HTML_UNESCAPE_TABLE)
 
@@ -114,8 +112,7 @@ def clean_filename(s, minimal_change=False):
     """
 
     # First, deal with URL encoded strings
-    h = html_parser.HTMLParser()
-    s = h.unescape(s)
+    s = html.unescape(s)
     s = unquote_plus(s)
 
     # Strip forbidden characters
